@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { DATA } from "./data";
-import { GlobeIcon } from "lucide-react";
+import { GlobeIcon, Trophy } from "lucide-react";
 import Link from "next/link";
 import { BlurFade } from "@/components/hacky-fade";
 
@@ -13,7 +13,7 @@ export default function Page() {
   return (
     <main className="flex flex-col min-h-[100dvh] space-y-12 py-12 px-6 mx-auto w-full max-w-7xl">
       
-      {/* 1. HERO SECTION (Stays Full Width) */}
+      {/* 1. HERO SECTION */}
       <section id="hero" className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr] items-center">
         <div className="space-y-4">
           <BlurFade delay={BLUR_FADE_DELAY}>
@@ -54,10 +54,10 @@ export default function Page() {
         </BlurFade>
       </section>
 
-      {/* 2. SPLIT LAYOUT: LEFT (Work) & RIGHT (Skills/Education) */}
+      {/* 2. SPLIT LAYOUT */}
       <div className="grid grid-cols-1 gap-10 md:grid-cols-[2fr_1fr]">
         
-        {/* === LEFT COLUMN === */}
+        {/* === LEFT COLUMN (Main Content) === */}
         <div className="space-y-12">
             
             {/* ABOUT */}
@@ -104,10 +104,10 @@ export default function Page() {
             </section>
         </div>
 
-        {/* === RIGHT COLUMN (SIDEBAR) === */}
+        {/* === RIGHT COLUMN (Sidebar) === */}
         <div className="space-y-10">
             
-            {/* SKILLS - Moved to the right as requested */}
+            {/* SKILLS */}
             <section id="skills">
                 <BlurFade delay={BLUR_FADE_DELAY * 9}>
                     <h2 className="text-2xl font-bold mb-4">Skills</h2>
@@ -123,7 +123,7 @@ export default function Page() {
                 </BlurFade>
             </section>
 
-            {/* EDUCATION - Moved to right to balance layout */}
+            {/* EDUCATION */}
             <section id="education" className="space-y-4">
                 <BlurFade delay={BLUR_FADE_DELAY * 7}>
                     <h2 className="text-2xl font-bold">Education</h2>
@@ -148,22 +148,58 @@ export default function Page() {
                     </BlurFade>
                 ))}
             </section>
+
+            {/* ACHIEVEMENTS */}
+            <section id="achievements" className="space-y-4">
+                <BlurFade delay={BLUR_FADE_DELAY * 10}>
+                    <h2 className="text-2xl font-bold">Achievements</h2>
+                </BlurFade>
+                {DATA.achievements.map((achievement, id) => (
+                    <BlurFade key={achievement.title} delay={BLUR_FADE_DELAY * 11 + id * 0.1}>
+                    <Card className="bg-transparent shadow-none border-none">
+                        <CardHeader className="p-0">
+                        <div className="flex flex-col">
+                            <div className="flex items-center gap-2">
+                                <Trophy className="size-4 text-yellow-500" />
+                                <h3 className="font-semibold text-base">
+                                {achievement.title}
+                                </h3>
+                            </div>
+                            <div className="flex justify-between items-center text-sm text-muted-foreground mt-1">
+                                <span>{achievement.organization}</span>
+                                <span className="tabular-nums font-mono text-xs">{achievement.year}</span>
+                            </div>
+                        </div>
+                        </CardHeader>
+                        <CardContent className="mt-2 p-0 text-sm text-muted-foreground">
+                        {achievement.description}
+                        </CardContent>
+                    </Card>
+                    </BlurFade>
+                ))}
+            </section>
+
         </div>
       </div>
 
-      {/* 3. PROJECTS (Full Width Bottom) */}
+      {/* 3. PROJECTS (Now with Images) */}
       <section id="projects" className="space-y-6">
-        <BlurFade delay={BLUR_FADE_DELAY * 11}>
+        <BlurFade delay={BLUR_FADE_DELAY * 12}>
           <h2 className="text-2xl font-bold">Selected Projects</h2>
         </BlurFade>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {DATA.projects.map((project, id) => (
-            <BlurFade key={project.title} delay={BLUR_FADE_DELAY * 12 + id * 0.1}>
+            <BlurFade key={project.title} delay={BLUR_FADE_DELAY * 13 + id * 0.1}>
               <Link href={project.href} target="_blank">
                   <Card className="flex flex-col h-full overflow-hidden border hover:border-black/50 transition-all duration-300 hover:shadow-lg hover:-translate-y-1 bg-white">
-                  <div className="w-full h-40 bg-gray-100 border-b flex items-center justify-center text-muted-foreground text-xs font-mono">
-                      PROJECT IMAGE
-                  </div>
+                  
+                  {/* UPDATED IMAGE BLOCK */}
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-40 object-cover border-b"
+                  />
+                  
                   <CardHeader className="p-4">
                       <CardTitle className="text-base font-bold">
                           {project.title}
@@ -196,7 +232,7 @@ export default function Page() {
       </section>
       
       {/* CONTACT */}
-      <BlurFade delay={BLUR_FADE_DELAY * 13}>
+      <BlurFade delay={BLUR_FADE_DELAY * 14}>
           <section id="contact" className="flex flex-col items-center justify-center gap-4 py-12 text-center md:py-24">
               <h2 className="text-2xl font-bold">Get in Touch</h2>
               <Link href={DATA.contact.social.email.url} className="inline-flex h-10 items-center justify-center rounded-md bg-black px-8 text-sm font-medium text-white shadow transition-colors hover:bg-black/90">
